@@ -11,7 +11,7 @@
       <div class="text-danger mt-1">
         Name is required
       </div>
-    }
+      }
     </div>
 
     <!-- Email -->
@@ -22,7 +22,7 @@
       <div class="text-danger mt-1">
         Please enter a valid email
       </div>
-    }
+      }
     </div>
 
     <!-- Message -->
@@ -33,11 +33,50 @@
       <div class="text-danger mt-1">
         Message is required
       </div>
-    }
+      }
     </div>
 
     <button type="submit" class="btn btn-primary w-100" [disabled]="contactForm.invalid">
       Send Message
     </button>
+    <button type="button" class="btn btn-secondary w-100" (click)="openModal()">
+      Message History
+    </button>
   </form>
 </div>
+
+<!-- Modal -->
+@if (showModal) {
+<div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Message History</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+
+      <div class="modal-body">
+        @if (messages.length === 0) {
+        <p class="text-muted text-center">No messages yet.</p>
+        } @else {
+        <ul class="list-group">
+          @for (msg of messages; track msg) {
+          <li class="list-group-item">
+            <strong>{{ msg.name }}</strong>
+            <div class="text-muted small">{{ msg.email }} • {{ msg.time }}</div>
+            <p class="mb-0 mt-2">{{ msg.message }}</p>
+          </li>
+          }
+        </ul>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+}

@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 })
 export class Contact {
   contactForm: FormGroup;
+  messages: any[] = []; // Store message history
+  showModal = false; // Toggle for modal visibility
 
   constructor(private fb: FormBuilder) {
     this.contactForm = this.fb.group({
@@ -17,13 +19,36 @@ export class Contact {
       email: ['', [Validators.required, Validators.email]],
       message: ['', Validators.required]
     });
+
+    // Load existing messages from localStorage when the component loads
+    const stored = localStorage.getItem('messages');
+    this.messages = stored ? JSON.parse(stored) : [];
   }
-    onSubmit() {
+  onSubmit() {
     if (this.contactForm.valid) {
-      console.log(this.contactForm.value);
-    } else {
-      console.log('Form is invalid!');
+      const newMessage = this.contactForm.value;
+
+      // Add timestamp for clarity
+      newMessage.time = new Date().toLocaleString();
+
+      // Push to array
+      this.messages.push(newMessage);
+
+      // Save to localStorage
+      localStorage.setItem('messages', JSON.stringify(this.messages));
+
+      console.log('Message saved:', this.contactForm.value);
+
+      // Clear form
+      this.contactForm.reset();
+      console.log(newMessage);
     }
   }
-
+    openModal() {
+    this.showModal = true;
   }
+    closeModal() {
+    this.showModal = false;
+  }
+
+}
