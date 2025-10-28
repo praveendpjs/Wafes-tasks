@@ -5,7 +5,7 @@
         <div class="card-body p-4">
           <h3 class="text-center mb-4">Register</h3>
 
-          <form>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
               <label for="firstName" class="form-label">First Name</label>
               <input type="text" class="form-control" id="firstName" placeholder="Enter your first name" required>
@@ -21,19 +21,24 @@
               <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
             </div>
 
-            <div class="mb-3">
-              <label for="mobile" class="form-label">Mobile</label>
-              <input type="tel" class="form-control" id="mobile" placeholder="Enter your mobile number" required>
+            <div class="mb-3 position-relative">
+              <label class="form-label">Password</label>
+              <input [type]="showPassword ? 'text' : 'password'" class="form-control" formControlName="password"
+                placeholder="Enter password">
+              <i class="bi" [ngClass]="showPassword ? 'bi-eye' : 'bi-eye-slash'"
+                (click)="togglePasswordVisibility('password')"
+                style="position:absolute; top:50%; right:15px; transform:translateY(-50%); cursor:pointer;">
+              </i>
             </div>
 
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Enter password" required>
-            </div>
-
-            <div class="mb-3">
-              <label for="confirmPassword" class="form-label">Confirm Password</label>
-              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" required>
+            <div class="mb-3 position-relative">
+              <label class="form-label">Confirm Password</label>
+              <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control"
+                formControlName="confirmPassword" placeholder="Confirm password">
+              <i class="bi" [ngClass]="showConfirmPassword ? 'bi-eye' : 'bi-eye-slash'"
+                (click)="togglePasswordVisibility('confirm')"
+                style="position:absolute; top:50%; right:15px; transform:translateY(-50%); cursor:pointer;">
+              </i>
             </div>
 
             <button type="submit" class="btn btn-primary w-100">Register</button>
