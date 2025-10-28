@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,ReactiveFormsModule} from '@angular/forms';
+import { passwordMatchValidator } from '../Validators/password-match.validator';
 
 @Component({
   selector: 'app-register',
@@ -21,8 +22,11 @@ export class Register {
       mobile: ['', Validators.required],
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
-    });
+    },
+    { validators: passwordMatchValidator('password', 'confirmPassword') }
+  );
   }
+  // Toggle password visibility with hash eye
     togglePasswordVisibility(field: string) {
     if (field === 'password') {
       this.showPassword = !this.showPassword;
@@ -30,6 +34,8 @@ export class Register {
       this.showConfirmPassword = !this.showConfirmPassword;
     }
   }
+
+
 
   onSubmit() {
     if (this.registerForm.valid) {
