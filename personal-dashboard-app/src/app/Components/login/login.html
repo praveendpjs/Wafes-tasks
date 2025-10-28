@@ -1,25 +1,46 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="card shadow-lg border-0 rounded-3">
         <div class="card-body p-4">
           <h3 class="text-center mb-4">Login</h3>
 
-          <form>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-control" placeholder="Enter your email" required>
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                formControlName="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+              />
             </div>
 
             <div class="mb-3 position-relative">
-              <label class="form-label">Password</label>
-              <input type="password" class="form-control" id="loginPassword" placeholder="Enter password" required>
-              <i class="bi bi-eye-slash" id="toggleLoginPassword"></i>
+              <label for="password" class="form-label">Password</label>
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                class="form-control"
+                formControlName="password"
+                id="password"
+                placeholder="Enter your password"
+                required
+              />
+              <i
+                class="bi"
+                [ngClass]="showPassword ? 'bi-eye' : 'bi-eye-slash'"
+                (click)="togglePasswordVisibility()"
+              ></i>
             </div>
+
+            @if (errorMessage) {
+              <div class="text-danger mb-3">{{ errorMessage }}</div>
+            }
 
             <button type="submit" class="btn btn-primary w-100">Login</button>
           </form>
-
         </div>
       </div>
     </div>

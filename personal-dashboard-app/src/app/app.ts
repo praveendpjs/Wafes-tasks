@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from './Components/Services/auth';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,14 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('personal-dashboard-app');
+  isLoggedIn = false;
+
+  constructor(private auth: AuthService) {
+    // Subscribe to login state
+    this.auth.isLoggedIn$.subscribe(status => this.isLoggedIn = status);
+  }
+
+  logout() {
+    this.auth.logout();
+  }
 }
