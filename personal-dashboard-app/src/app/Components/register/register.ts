@@ -16,6 +16,7 @@ export class Register {
   showPassword = false;
   showConfirmPassword = false;
   errorMessage = '';
+  forgotPassword = '';
 
   constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {
     this.registerForm = this.fb.group({
@@ -60,6 +61,9 @@ export class Register {
       error: (err) => {
         console.error('Signup failed:', err);
         this.errorMessage = err.error?.message || 'Registration failed. Try again.';
+        if(err.error?.message){
+          this.forgotPassword = "Forgot password"
+        }
       },
     });
   }
